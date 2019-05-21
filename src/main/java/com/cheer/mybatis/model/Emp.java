@@ -1,6 +1,9 @@
 package com.cheer.mybatis.model;
 
-public class Emp {
+import java.io.Serializable;
+
+// 如果使用二级缓存，模型必须实现序列化接口
+public class Emp implements Serializable {
     private Integer empNo;
     private String ename;
     private String job;

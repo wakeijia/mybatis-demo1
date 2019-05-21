@@ -7,6 +7,9 @@
     <properties resource="jdbc.properties">
     </properties>
     <settings>
+        <!--提示：一级缓存是默认开启的，而且无法关闭，是在同一个session内共享数据-->
+        <!--开启二级缓存 (总开关)，是在不同的session之间共享数据-->
+        <setting name="cacheEnabled" value="true"/>
         <!--文件-->
         <setting name="logImpl" value="log4j2"/>
     </settings>
