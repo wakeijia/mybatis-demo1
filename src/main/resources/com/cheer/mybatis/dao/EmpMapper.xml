@@ -10,9 +10,31 @@
     <select id="getEmp" resultType="com.cheer.mybatis.model.Emp" useCache="true">
         select * from emp where empNo = #{empNo}
     </select>
+    <select id="getPageList" resultType="Emp">
+        select * from emp order by empNo
+    </select>
     <insert id="insert">
         insert into emp values (#{empNo},#{ename},#{job},#{mgr},#{hireDate},#{sal},#{com},#{deptNo})
     </insert>
+
+    <select id="getEmpMap" resultType="Map">
+        select * from emp e left join dept d on e.deptno = d.deptno where empNo = #{empNo}
+    </select>
+
+    <select id="getEmpResultMap" resultMap="empResultMap">
+        select * from emp where empNo = #{empNo}
+    </select>
+
+    <select id="getList" resultType="com.cheer.mybatis.model.Emp">
+        select * from emp
+    </select>
+
+    <resultMap id="empResultMap" type="emp">
+        <id property="empNo" column="empNo"></id>
+        <result property="ename" column="ename"></result>
+    </resultMap>
+
+
     <update id="update">
         update emp set empNo = #{empNo},ename = #{ename},job = #{job},mgr = #{mgr},hireDate = #{hireDate},sal = #{sal},com = #{com},deptNo = #{deptNo}
         where empNo = #{empNo}

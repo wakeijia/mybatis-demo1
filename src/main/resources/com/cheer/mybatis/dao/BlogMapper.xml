@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cheer.mybatis.dao.BlogMapper">
+    <select id="findActiveBlogWithTitleLike" resultType="Blog">
+        select * from blog where state = #{state}
+        <if test="title != null">
+            and title like #{title}
+        </if>
+    </select>
+    <select id="findActiveBlogLike" resultType="com.cheer.mybatis.model.Blog">
+        select b.* from blog b left join author a on b.author_id = a.id where state = #{state}
+        <if test="title != null">
+            and title like #{title}
+        </if>
+        <if test="username != null">
+            and username like #{username}
+        </if>
+    </select>
+    <select id="findActiveBlogLike1" resultType="com.cheer.mybatis.model.Blog">
+        select b.* from blog b left join author a on b.author_id = a.id where state = #{state}
+        <choose>
+            <when test="title != null">
+                and title like #{title}
+            </when>
+            <when test="username != null">
+                and username like #{username}
+            </when>
+            <otherwise>
+                and bio = null
+            </otherwise>
+        </choose>
+    </select>
+    <select id="findActiveBlogLike2" resultType="com.cheer.mybatis.model.Blog">
+        select b.* from blog b left join author a on b.author_id = a.id
+        <!--方法一-->
+        <!--        <where>-->
+        <!--            <if test="state != null">-->
+        <!--                state = #{state}-->
+        <!--            </if>-->
+        <!--            <if test="title != null">-->
+        <!--                and title like #{title}-->
+        <!--            </if>-->
+        <!--            <if test="username != null">-->
+        <!--                and username like #{username}-->
+        <!--            </if>-->
+        <!--        </where>-->
+
+        <!-- 方法二 -->
+        <trim prefix="where" prefixOverrides="and">
+            <if test="state != null">
+                state = #{state}
+            </if>
+            <if test="title != null">
+                and title like #{title}
+            </if>
+            <if test="username != null">
+                and username like #{username}
+            </if>
+        </trim>
+    </select>
+
+
+</mapper>

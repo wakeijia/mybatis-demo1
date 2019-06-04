@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cheer.mybatis.dao.AuthorMapper">
+    <update id="updateAuthorIfNecessary">
+        update author
+        <!-- 方法一 -->
+        <set>
+            <if test="username != null">
+                username = #{username},
+            </if>
+            <if test="bio != null">
+                bio = #{bio}
+            </if>
+        </set>
+
+        <!-- 方法二 -->
+<!--        <trim prefix="set" suffixOverrides=",">-->
+<!--            <if test="username != null">-->
+<!--                username = #{username},-->
+<!--            </if>-->
+<!--            <if test="bio != null">-->
+<!--                bio = #{bio}-->
+<!--            </if>-->
+<!--        </trim>-->
+        where id = #{id}
+    </update>
+    <select id="selectAuthorIn" resultType="com.cheer.mybatis.model.Author">
+        select * from author where id in
+        <foreach collection="list" open="(" close=")" index="index" item="id" separator=",">
+            #{id}
+        </foreach>
+    </select>
+</mapper>
